@@ -1,0 +1,498 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 20px;
+  gap: 12px;
+}
+
+body {
+  background-color: #0b1329;
+  color: #ecf5ff;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  overflow-y: hidden;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;  
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: stretch;
+}
+
+#input-Cep {
+  flex: 1;
+  background-color: #16213a;
+  color: white;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  outline: none;
+}
+
+#contadores {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+  padding-bottom: 15px;
+  font-size: 15px;
+  flex-wrap: wrap;
+  border-bottom: 2px solid #05335e;
+}
+
+#contadores span {
+  padding: 5px 10px;
+  border-radius: 10px;
+  color: #a0a0a0;
+}
+
+.filtro-prioridade{
+  font-size: 18px;
+}
+
+.filtro-prioridade select{
+  width: 90px;
+}
+.kanban-btn-add{
+  background-color:  #0b1329;
+  border: 1px solid rgb(229, 229, 252);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+.btn-filtro {
+  padding: 8px 14px;
+  background-color: #16213a;
+  color: #e6e6e6;
+  border: 1px solid #2c3a57;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  margin-bottom: 15px;
+  margin-right: 8px;
+}
+
+.btn-filtro.ativo {
+  background-color: #074682;
+  color: #001547;
+  font-weight: bold;
+  border-color: #074682;
+}
+
+#formulario {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin: 4px auto 15px auto;
+  width: 100%;
+}
+
+#input-tarefa {
+  flex: 1;
+  background-color: #16213a;
+  color: white;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  outline: none;
+}
+
+#lista-tarefas {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.msg-vazia {
+  margin: auto 0; 
+  text-align: center;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+select {
+  width: 120px;
+  padding: 0px 14px;
+  background-color: #16213a;
+  color: white;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  outline: none;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+#input-tarefa,
+#input-Cep,
+select,
+#btn-adicionar {
+  height: 48px;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+#input-tarefa:focus,
+#input-Cep:focus,
+select:focus {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+#btn-adicionar {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  padding: 0 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+#btn-adicionar:hover {
+  transform: translateY(1px);
+  box-shadow: 0 4px 4px rgba(37, 99, 235, 0.4);
+}
+
+.kanban-quadro {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+  margin-top: 24px;
+  align-items: stretch; 
+}
+
+.kanban-coluna {
+  flex: 1 1 0px; 
+  min-width: 0;  
+  background-color: #101a33;
+  border: 1px solid #1E3A5F;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.kanban-coluna:nth-child(1) {
+  border-top: 3px solid #3b82f6;
+}
+
+.kanban-coluna:nth-child(2) {
+  border-top: 3px solid #f59e0b;
+}
+
+.kanban-coluna:nth-child(3) {
+  border-top: 3px solid #10b981;
+}
+
+.kanban-coluna-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #334155;
+}
+
+.kanban-coluna-header h2 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  letter-spacing: 0.06rem;
+}
+
+.kanban-contador {
+  background-color: #334155;
+  color: #94A3B8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.kanban-lista {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.kanban-lista .tarefa {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.kanban-lista .tarefa span:first-child {
+  width: 100%;
+}
+
+footer {
+  width: 100%;
+  margin-top: auto;
+  padding: 20px;
+  text-align: center;
+  color: #888888;
+  font-size: 0.9rem;
+  border-top: 1px solid #1e293b;
+}
+
+#input-Cep {
+  flex: 1;
+  background-color: #16213a;
+  color: white;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  outline: none;
+}
+
+#contadores {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+  padding-bottom: 15px;
+  font-size: 15px;
+  flex-wrap: wrap;
+  border-bottom: 2px solid #05335e;
+}
+
+#contadores span {
+  padding: 5px 10px;
+  border-radius: 10px;
+  color: #a0a0a0;
+}
+
+.filtro-prioridade{
+  font-size: 18px;
+}
+
+.filtro-prioridade select{
+  width: 90px;
+}
+.kanban-btn-add{
+  background-color:  #0b1329;
+  border: 1px solid rgb(229, 229, 252);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+.btn-filtro {
+  padding: 8px 14px;
+  background-color: #16213a;
+  color: #e6e6e6;
+  border: 1px solid #2c3a57;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  margin-bottom: 15px;
+  margin-right: 8px;
+}
+
+.btn-filtro.ativo {
+  background-color: #074682;
+  color: #001547;
+  font-weight: bold;
+  border-color: #074682;
+}
+
+#formulario {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin: 4px auto 15px auto;
+  width: 100%;
+}
+
+#input-tarefa {
+  flex: 1;
+  background-color: #16213a;
+  color: white;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  outline: none;
+}
+
+#lista-tarefas {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.msg-vazia {
+  margin: 25px;
+  text-align: center;
+  color: #8b98b3;
+}
+
+select {
+  width: 120px;
+  padding: 0px 14px;
+  background-color: #16213a;
+  color: white;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  outline: none;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+
+#input-tarefa,
+#input-Cep,
+select,
+#btn-adicionar {
+  height: 48px;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+#input-tarefa:focus,
+#input-Cep:focus,
+select:focus {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+#btn-adicionar {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  padding: 0 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+#btn-adicionar:hover {
+  transform: translateY(1px);
+  box-shadow: 0 4px 4px rgba(37, 99, 235, 0.4);
+}
+
+.kanban-quadro {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+  margin-top: 24px;
+  width: 100%;
+  align-items: flex-start;
+  overflow-x: auto;
+}
+
+.kanban-coluna {
+  flex: 1;
+  border: 1px solid #1E3A5F;
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 200px;
+}
+
+.kanban-coluna:nth-child(1) {
+  border-top: 3px solid #3b82f6;
+}
+
+.kanban-coluna:nth-child(2) {
+  border-top: 3px solid #f59e0b;
+}
+
+.kanban-coluna:nth-child(3) {
+  border-top: 3px solid #10b981;
+}
+
+.kanban-coluna-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #334155;
+}
+
+.kanban-coluna-header h2 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  letter-spacing: 0.06rem;
+}
+
+.kanban-contador {
+  background-color: #334155;
+  color: #94A3B8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.kanban-lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 60px;
+}
+
+.kanban-lista .tarefa {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.kanban-lista .tarefa span:first-child {
+  width: 100%;
+}
+
+footer {
+  width: 100%;
+  margin-top: auto;
+  padding: 20px;
+  text-align: center;
+  color: #888888;
+  font-size: 0.9rem;
+  border-top: 1px solid #1e293b;
+}

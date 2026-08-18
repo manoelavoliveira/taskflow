@@ -1,0 +1,89 @@
+.login-container {
+  position: fixed;
+  top: 0;
+  left: 220px; 
+  right: 0;
+  bottom: 0;
+  background-color: #0b1329;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+    background-color: #001d3d;
+    border: 1px solid #001530;
+    border-radius: 12px;
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.login-logo { 
+    color: #1B5E9A; 
+    font-size: 2rem; 
+    text-align: center; 
+}
+
+.login-subtitulo { 
+    color: #64748B; 
+    font-size: 0.9rem; 
+    text-align: center; 
+}
+
+.login-input { 
+    background: #0D1B2A; 
+    color: #E2E8F0;
+    border: 1px solid #334155; 
+    border-radius: 6px;
+    padding: 11px 14px; 
+    font-size: 1rem; 
+    outline: none; 
+}
+
+.login-input:focus{
+    border-color: #38bdf8;
+}
+
+.login-erro { 
+    color: #EF4444; 
+    background: rgba(239,68,68,0.08);
+    font-size: 0.9rem; 
+    text-align: center; 
+    border: 1px solid rgba(239,68,68,0.3);
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+
+.login-btn { 
+    background: #1B5E9A; 
+    color: white; 
+    border: none;
+    border-radius: 6px; 
+    padding: 12px;
+    font-size: 1rem; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.login-btn:hover{ background: #1e4a7a;}
+
+.login-btn:active{ transform: scale(0.98);}
+
+.login-aviso { 
+    color: #334155; 
+    font-size: 0.75rem;   
+    text-align: center; 
+}
+
+@keyframes shake{
+    0%,100% { transform: translateX(0); }
+    15%,45%,75% { transform: translateX(-8px); }
+    30%,60%,90% { transform: translateX(8px); }
+}
+
+.shake { animation: shake 0.5s ease-in-out; }
