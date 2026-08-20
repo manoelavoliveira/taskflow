@@ -62,7 +62,7 @@ function TarefasV1() {
         </section> */
 
   //const [tarefas, setTarefas] = useState([]);
-  const [proximoId, setProximoId] = useState(1);
+  const [proximoId, setProximoId] = useState(1); 
   const [texto, setTexto] = useState("");
   const [prioridade, setPrioridade] = useState("media");
   const [filtroAtual, setFiltroAtual] = useState("todas");

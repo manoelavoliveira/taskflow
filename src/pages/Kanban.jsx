@@ -24,7 +24,7 @@ function Kanban() {
   const [tarefaEditando, setTarefaEditando] = useState(null);
   const [colunaAtiva, setColunaAtiva] = useState("afazer");
   const [erro, setErro] = useState("");
-  const [carregando, setCarregando] = useState(true);
+  const [carregando, setCarregando] = useState(true); 
 
   // useEffect(() => {
   //   localStorage.setItem("taskflow-tarefas", JSON.stringify(tarefas));
