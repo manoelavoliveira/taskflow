@@ -19,6 +19,48 @@ function TarefasV1() {
   }
 }, []);))*/
 
+        /* <section id="formulario">
+          <input
+            id="input-tarefa"
+            type="text"
+            placeholder="Adicione suas tarefas..."
+            required
+            value={texto}
+            onChange={(e) => setTexto(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && adicionarTarefa()}
+          />
+          <input
+            id="input-Cep"
+            type="text"
+            placeholder="Inclua o seu CEP"
+            value={cep}
+            onChange={(e) => {
+              setCep(e.target.value);
+              buscarCep(e.target.value);
+            }}
+            maxLength={9}
+          />
+
+          {buscandoCep && <span>Buscando...</span>}
+          {cidade && <span>{cidade}</span>}
+          {erroCep && <span>{erroCep}</span>}
+
+          <select
+            id="sel-prioridade"
+            value={prioridade}
+            onChange={(e) => setPrioridade(e.target.value)}
+          >
+            <option value="alta">🔴Alta</option>
+            <option value="media">🟡Média</option>
+            <option value="baixa">🟢Baixa</option>
+          </select>
+
+          <button onClick={adicionarTarefa} type="button" id="btn-adicionar">
+            Incluir
+          </button>
+          <br />
+        </section> */
+
   //const [tarefas, setTarefas] = useState([]);
   const [proximoId, setProximoId] = useState(1);
   const [texto, setTexto] = useState("");
