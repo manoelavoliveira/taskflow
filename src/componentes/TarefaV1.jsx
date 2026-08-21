@@ -61,13 +61,124 @@ function TarefasV1() {
           <br />
         </section> */
 
+  // useEffect(() => {
+  //   localStorage.setItem("taskflow-tarefas", JSON.stringify(tarefas));
+  // }, [tarefas]);
+
+    // const [tarefas, setTarefas] = useState(() => {
+  //   const salvas = localStorage.getItem("taskflow-tarefas");
+  //   return salvas ? JSON.parse(salvas) : [];
+  // });
+  // const [proximoId, setProximoId] = useState(1);
+
   //const [tarefas, setTarefas] = useState([]);
+
+    // const adicionarTarefa = () => {
+  //   if (texto.trim() === "") return;
+  //   const nova = {
+  //     id: proximoId,
+  //     texto: texto.trim(),
+  //     concluida: false,
+  //     prioridade: prioridade,
+  //     coluna: "afazer",
+  //     cidade: cidade,
+  //   };
+  //   //setTarefas((prevTarefas) => [...prevTarefas, nova]);
+  //   setTarefas([...tarefas, nova]);
+  //   setProximoId(proximoId + 1);
+  //   setTexto("");
+  //   setPrioridade("media");
+  //   setErroCep("");
+  //   setCep("");
+  //   setCidade("");
+  // };
+
+  
+  /*const concluirTarefa = (id) => {
+    setTarefas(
+      tarefas.map((tarefa) =>
+        tarefa.id === id ? { ...tarefa, concluida: !tarefa.concluida } : tarefa,
+      ),
+    );
+  };*/
+    /*async function incluirCep(cep) {
+    try {
+      const resposta = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+
+      console.log("CEP Data", resposta.data);
+    } catch (erro) {
+      console.log(erro.message);
+    }
+  }*/
+  // async function buscarCep(cepDigitado) {
+  //   const cepLimpo = cepDigitado.replace(/\D/g, "");
+
+  //   if (cepLimpo.length !== 8) {
+  //     setCidade("");
+  //     setErroCep("Digite um CEP válido.");
+  //     return;
+  //   }
+
+  //   setBuscandoCep(true);
+  //   setErroCep("");
+
+  //   try {
+  //     const resposta = await axios.get(
+  //       `https://viacep.com.br/ws/${cepLimpo}/json/`,
+  //     );
+
+  //     console.log("Response", resposta);
+  //     console.log("Response Data", resposta.data);
+  //     console.log("Status", resposta.status);
+
+  //     const data = resposta.data;
+
+  //     if (data.erro) {
+  //       throw new Error("CEP não encontrado");
+  //     }
+
+  //     setCidade(data.localidade + "/" + data.uf);
+
+  //     console.log("Cidade:", data.localidade);
+  //     console.log("UF:", data.uf);
+  //     console.log("Logradouro:", data.logradouro);
+  //     console.log("Bairro:", data.bairro);
+  //   } catch {
+  //     setErroCep("CEP inválido ou não encontrado");
+  //     setCidade("");
+  //   } finally {
+  //     setBuscandoCep(false);
+  //   }
+  // }
+  /*const totalTarefas = tarefasFiltradas.length;
+  const pendentes = tarefasFiltradas.filter((t) => !t.concluida).length;
+  const concluidas = tarefasFiltradas.filter((t) => t.concluida).length;*/
+
+  
+  // function salvarTarefa(dados) {
+  //   if (dados.id !== undefined) {
+  //     setTarefas(
+  //       tarefas.map((tarefa) =>
+  //         (tarefa.id === dados.id ? { ...tarefa, ...dados } : tarefa)),
+  //     );
+  //   } else {
+  //     const novaTarefa = {
+  //       ...dados,
+  //       id: proximoId
+  //     };
+  //     setTarefas([...tarefas, novaTarefa]);
+  //     setProximoId ( proximoId + 1 );
+  //   }
+  // }
+
+          /*total={totalTarefas}
+      pendentes={pendentes}
+      concluidas={concluidas}*/
   const [proximoId, setProximoId] = useState(1); 
   const [texto, setTexto] = useState("");
   const [prioridade, setPrioridade] = useState("media");
   const [filtroAtual, setFiltroAtual] = useState("todas");
   const [coluna, setColuna] = useState("afazer");
-  const [cep, setCep] = useState("");
   //const [carregado, setCarregado] = useState(false);
 
   const [tarefas, setTarefas] = useState(() => {

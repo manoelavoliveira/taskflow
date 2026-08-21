@@ -7,28 +7,14 @@ import ModalTarefa from "../componentes/ModalTarefa.jsx";
 const URL_API = "https://6a85aadd9c451dc67a63ec39.mockapi.io/tarefas";
 
 function Kanban() {
-  // const [tarefas, setTarefas] = useState(() => {
-  //   const salvas = localStorage.getItem("taskflow-tarefas");
-  //   return salvas ? JSON.parse(salvas) : [];
-  // });
-  // const [proximoId, setProximoId] = useState(1);
   const [tarefas, setTarefas] = useState([]);
-  const [texto, setTexto] = useState("");
-  const [prioridade, setPrioridade] = useState("media");
   const [filtroPrioridade, setFiltroPrioridade] = useState("todas");
-  const [cidade, setCidade] = useState("");
-  const [buscandoCep, setBuscandoCep] = useState(false);
-  const [erroCep, setErroCep] = useState("");
-  const [cep, setCep] = useState("");
   const [modalAberto, setModalAberto] = useState(false);
   const [tarefaEditando, setTarefaEditando] = useState(null);
   const [colunaAtiva, setColunaAtiva] = useState("afazer");
   const [erro, setErro] = useState("");
-  const [carregando, setCarregando] = useState(true); 
+  const [carregando, setCarregando] = useState(true);
 
-  // useEffect(() => {
-  //   localStorage.setItem("taskflow-tarefas", JSON.stringify(tarefas));
-  // }, [tarefas]);
   useEffect(() => {
     async function carregarTarefas() {
       try {
@@ -59,26 +45,6 @@ function Kanban() {
     }
   }, [tarefas]);
 
-  // const adicionarTarefa = () => {
-  //   if (texto.trim() === "") return;
-  //   const nova = {
-  //     id: proximoId,
-  //     texto: texto.trim(),
-  //     concluida: false,
-  //     prioridade: prioridade,
-  //     coluna: "afazer",
-  //     cidade: cidade,
-  //   };
-  //   //setTarefas((prevTarefas) => [...prevTarefas, nova]);
-  //   setTarefas([...tarefas, nova]);
-  //   setProximoId(proximoId + 1);
-  //   setTexto("");
-  //   setPrioridade("media");
-  //   setErroCep("");
-  //   setCep("");
-  //   setCidade("");
-  // };
-
   async function deletarTarefa(id) {
     const confirmado = window.confirm(
       "Tem certeza que deseja deletar esta tarefa?",
@@ -95,14 +61,6 @@ function Kanban() {
       console.error(e);
     }
   }
-
-  /*const concluirTarefa = (id) => {
-    setTarefas(
-      tarefas.map((tarefa) =>
-        tarefa.id === id ? { ...tarefa, concluida: !tarefa.concluida } : tarefa,
-      ),
-    );
-  };*/
 
   async function moverTarefa(id, novaColuna) {
     try {
@@ -125,59 +83,6 @@ function Kanban() {
     if (filtroPrioridade === "todas") return true;
     return tarefa.prioridade === filtroPrioridade;
   });
-
-  /*async function incluirCep(cep) {
-    try {
-      const resposta = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-
-      console.log("CEP Data", resposta.data);
-    } catch (erro) {
-      console.log(erro.message);
-    }
-  }*/
-  async function buscarCep(cepDigitado) {
-    const cepLimpo = cepDigitado.replace(/\D/g, "");
-
-    if (cepLimpo.length !== 8) {
-      setCidade("");
-      setErroCep("Digite um CEP válido.");
-      return;
-    }
-
-    setBuscandoCep(true);
-    setErroCep("");
-
-    try {
-      const resposta = await axios.get(
-        `https://viacep.com.br/ws/${cepLimpo}/json/`,
-      );
-
-      console.log("Response", resposta);
-      console.log("Response Data", resposta.data);
-      console.log("Status", resposta.status);
-
-      const data = resposta.data;
-
-      if (data.erro) {
-        throw new Error("CEP não encontrado");
-      }
-
-      setCidade(data.localidade + "/" + data.uf);
-
-      console.log("Cidade:", data.localidade);
-      console.log("UF:", data.uf);
-      console.log("Logradouro:", data.logradouro);
-      console.log("Bairro:", data.bairro);
-    } catch {
-      setErroCep("CEP inválido ou não encontrado");
-      setCidade("");
-    } finally {
-      setBuscandoCep(false);
-    }
-  }
-  /*const totalTarefas = tarefasFiltradas.length;
-  const pendentes = tarefasFiltradas.filter((t) => !t.concluida).length;
-  const concluidas = tarefasFiltradas.filter((t) => t.concluida).length;*/
 
   function abrirModalCriar(coluna) {
     setTarefaEditando(null);
@@ -222,46 +127,23 @@ function Kanban() {
     }
   }
 
-  // function salvarTarefa(dados) {
-  //   if (dados.id !== undefined) {
-  //     setTarefas(
-  //       tarefas.map((tarefa) =>
-  //         (tarefa.id === dados.id ? { ...tarefa, ...dados } : tarefa)),
-  //     );
-  //   } else {
-  //     const novaTarefa = {
-  //       ...dados,
-  //       id: proximoId
-  //     };
-  //     setTarefas([...tarefas, novaTarefa]);
-  //     setProximoId ( proximoId + 1 );
-  //   }
-  // }
-
   return (
     <div id="app">
       <Header
         titulo="TaskFlow"
         subtitulo="Gerencie suas tarefas"
-        /*total={totalTarefas}
-      pendentes={pendentes}
-      concluidas={concluidas}*/
         tarefas={tarefas}
       />
       <main className="container">
-        {/* Feedback de carregamento */}
         {carregando && (
           <p style={{ textAlign: "center", color: "#94A3B8" }}>
             Carregando tarefas...
           </p>
         )}
 
-        {/* Feedback de erro */}
         {erro && (
           <p style={{ textAlign: "center", color: "#EF4444" }}>{erro}</p>
         )}
-
-        {/* Quadro Kanban — so aparece quando nao esta carregando */}
 
         <div className="filtro-prioridade">
           <label>Filtrar por prioridade: </label>

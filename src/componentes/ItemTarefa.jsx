@@ -19,7 +19,6 @@ function ItemTarefa({
 
   return (
     <li className={classeItem}>
-      {/* Conteúdo Principal (Texto + Cidade) */}
       <div className={styles.conteudoTarefa}>
         <span className={classeTexto} onDoubleClick={onEditar}>
           {texto}
@@ -28,7 +27,6 @@ function ItemTarefa({
         {cidade && <span className={styles.cidadeTag}>📍 {cidade}</span>}
       </div>
 
-      {/* Lado Direito (Badge + Ações) */}
       <div className={styles.painelDireito}>
         <span className={classePrioridade}>{prioridade}</span>
 
