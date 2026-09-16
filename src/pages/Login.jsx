@@ -2,27 +2,36 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import "./Login.css";
 import { useAuth } from "../contexts/AuthContext";
+import api from "../api";
 
 function Login() {
-  const [usuario, setUsuario] = useState("");
+  const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
   const [shake, setShake] = useState(false);
 
-  function handleLogin() {
-    if (usuario === "admin" && senha === "1234") {
-      login();
-      navigate("/");
+  async function handleLogin() {
+    setErro('');
+    try {
+      const resposta = await api.post('/auth/login', {
+        email, senha
+      });
 
-      return;
+      const {token, usuario} = resposta.data;
+
+      login(usuario, token);
+      navigate('/');
+
+    } catch (err) {
+      setErro (err.response?.data?.erro || 'Erro ao fazer login');
+
+      setShake(true);
+      
+      setTimeout(() => setShake(false), 500)
     }
 
-    setErro("Usuário ou senha incorretos! Tente novamente.");
-    setShake(true);
-
-    setTimeout(() => setShake(false), 500);
   }
 
   return (
@@ -35,8 +44,8 @@ function Login() {
           className="login-input"
           type="text"
           placeholder="Usuário"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <input

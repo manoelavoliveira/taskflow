@@ -6,8 +6,10 @@ import Login from "./pages/Login";
 import Sidebar from "./componentes/Sidebar";
 import { useState } from "react";
 import RotaPrivada from "./componentes/RotaPrivada";
+//import { useAuth } from "./contexts/AuthContext";
 
 function App() {
+  //console.log(useAuth())
   return (
     <div className="app-layout">
       <Sidebar />

@@ -18,7 +18,7 @@ api.interceptors.response.use(
             window.location.href = '/login';
         }
         return Promise.reject(erro);
-    }
+    }      
 );
 
 export default api;

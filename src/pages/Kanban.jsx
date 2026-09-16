@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import ListaTarefas from "../componentes/ListaTarefas.jsx";
 import axios from "axios";
 import ModalTarefa from "../componentes/ModalTarefa.jsx";
+import api from "../api";
 
-const URL_API = "https://6a85aadd9c451dc67a63ec39.mockapi.io/tarefas";
+//const URL_API = "https://6a85aadd9c451dc67a63ec39.mockapi.io/tarefas";
 
 function Kanban() {
   const [tarefas, setTarefas] = useState([]);
@@ -21,7 +22,7 @@ function Kanban() {
         setCarregando(true);
         setErro("");
 
-        const resposta = await axios.get(URL_API);
+        const resposta = await api.get("/tarefas");
 
         setTarefas(resposta.data);
       } catch (e) {
@@ -46,37 +47,33 @@ function Kanban() {
   }, [tarefas]);
 
   async function deletarTarefa(id) {
-    const confirmado = window.confirm(
-      "Tem certeza que deseja deletar esta tarefa?",
-    );
-    if (!confirmado) return;
+    // const confirmado = window.confirm(
+    //   "Tem certeza que deseja deletar esta tarefa?",
+    // );
+    // if (!confirmado) return;
     try {
-      await axios.delete(URL_API + "/" + id);
+      await api.delete(`/tarefas/${id}`);
 
-      setTarefas((tarefasAtuais) =>
-        tarefasAtuais.filter((tarefa) => tarefa.id !== id),
-      );
-    } catch (e) {
+      setTarefas(tarefas.filter((tarefa) => tarefa.id !== id));
+    } catch (err) {
       setErro("Erro ao deletar tarefa. Tente novamente.");
-      console.error(e);
     }
   }
 
   async function moverTarefa(id, novaColuna) {
-    try {
-      const { data: tarefaMovida } = await axios.put(URL_API + "/" + id, {
-        coluna: novaColuna,
-      });
+    const resposta = await api.put(`/tarefas/${id}`, { coluna: novaColuna });
+    // try {
+    //   const { data: tarefaMovida } = await axios.put(URL_API + "/" + id, {
+    //     coluna: novaColuna,
+    //   });
 
-      setTarefas((tarefasAtuais) =>
-        tarefasAtuais.map((tarefa) =>
-          tarefa.id === id ? tarefaMovida : tarefa,
-        ),
-      );
-    } catch (e) {
-      setErro("Erro ao mover tarefa. Tente novamente.");
-      console.error(e);
-    }
+    setTarefas(
+      tarefas.map((tarefa) => (tarefa.id === id ? resposta.data : tarefa)),
+    );
+    // } catch (e) {
+    //   setErro("Erro ao mover tarefa. Tente novamente.");
+    //   console.error(e);
+    // }
   }
 
   const tarefasFiltradas = tarefas.filter((tarefa) => {
@@ -96,36 +93,46 @@ function Kanban() {
   }
 
   async function salvarTarefa(dados) {
-    try {
-      if (dados.id !== undefined) {
-        const { data: tarefaEditada } = await axios.put(
-          URL_API + "/" + dados.id,
-          {
-            texto: dados.texto,
-            prioridade: dados.prioridade,
-            cidade: dados.cidade,
-            coluna: dados.coluna,
-          },
-        );
-        setTarefas((tarefasAtuais) =>
-          tarefasAtuais.map((tarefa) =>
-            tarefa.id === dados.id ? tarefaEditada : tarefa,
-          ),
-        );
-      } else {
-        const { data: novaTarefa } = await axios.post(URL_API, {
-          texto: dados.texto,
-          prioridade: dados.prioridade,
-          cidade: dados.cidade,
-          coluna: dados.coluna,
-        });
-        setTarefas((tarefasAtuais) => [...tarefasAtuais, novaTarefa]);
+    if (dados.id === undefined) {
+      try {
+        const resposta = await api.post("/tarefas", dados);
+        setTarefas([...tarefas, resposta.data]);
+      } catch (err) {
+        setErro("Erro ao criar tarefa.");
       }
-    } catch (e) {
-      setErro("Erro ao salvar tarefa. Tente novamente.");
-      console.error(e);
+    } else {
+      try {
+        const resposta = await api.put(`/tarefas/${dados.id}`, dados);
+        setTarefas(tarefas.map((t) => (t.id === dados.id ? resposta.data : t)));
+      } catch (err) {
+        setErro("Erro ao editar tarefa.");
+      }
     }
   }
+  //       {
+  //         texto: dados.texto,
+  //         prioridade: dados.prioridade,
+  //         cidade: dados.cidade,
+  //         coluna: dados.coluna,
+  //       },
+  //     );
+  //     setTarefas((tarefasAtuais) =>
+  //       tarefasAtuais.map((tarefa) =>
+  //         tarefa.id === dados.id ? tarefaEditada : tarefa,
+  //       ),
+  //     );
+  //   } else {
+  //     const { data: novaTarefa } = await axios.post(URL_API, {
+  //       texto: dados.texto,
+  //       prioridade: dados.prioridade,
+  //       cidade: dados.cidade,
+  //       coluna: dados.coluna,
+  //     });
+  //     setTarefas((tarefasAtuais) => [...tarefasAtuais, novaTarefa]);
+  //   }
+  // } catch (e) {
+  //   setErro("Erro ao salvar tarefa. Tente novamente.");
+  //   console.error(e);
 
   return (
     <div id="app">
@@ -133,7 +140,7 @@ function Kanban() {
         titulo="TaskFlow"
         subtitulo="Gerencie suas tarefas"
         tarefas={tarefas}
-      />
+      />   
       <main className="container">
         {carregando && (
           <p style={{ textAlign: "center", color: "#94A3B8" }}>
