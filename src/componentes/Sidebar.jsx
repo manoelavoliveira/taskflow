@@ -3,10 +3,10 @@ import styles from "./Sidebar.module.css";
 import { useAuth } from "../contexts/AuthContext";
 
 function Sidebar() {
-  const { token, logout } = useAuth();
+  const { usuario, logout } = useAuth();
   const linkClass = ({ isActive }) =>
     isActive ? styles.link + " " + styles.ativo : styles.link;
-  const { usuario } = useAuth();
+  //const { usuario } = useAuth();
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -20,18 +20,21 @@ function Sidebar() {
         <h1>TaskFlow</h1>
       </div>
       <nav className={styles.nav}>
-        {token && (
+        {/*{token && (
           <NavLink to="/" className={linkClass}>
             Dashboard
           </NavLink>
-        )}
+        )}*/}
+        <NavLink to="/" className={linkClass}>
+            Dashboard
+          </NavLink>
         <NavLink to="/sobre" className={linkClass}>
           Sobre
         </NavLink>
       </nav>
       <div className="sidebar-usuario">
         <span>Olá, {usuario?.nome ?? "Usuário"}</span>
-        <button onClick={handleLogout}>Sair</button>
+        <button className="btnLogout" onClick={handleLogout}>Sair</button>
       </div>
     </aside>
   );

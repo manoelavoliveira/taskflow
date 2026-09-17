@@ -13,25 +13,25 @@ function Login() {
   const [shake, setShake] = useState(false);
 
   async function handleLogin() {
-    setErro('');
+    setErro("");
     try {
-      const resposta = await api.post('/auth/login', {
-        email, senha
+      const resposta = await api.post("/auth/login", {
+        email,
+        senha,
       });
 
-      const {token, usuario} = resposta.data;
+      const { token, usuario } = resposta.data;
 
       login(usuario, token);
-      navigate('/');
-
+      navigate("/");
+      
     } catch (err) {
-      setErro (err.response?.data?.erro || 'Erro ao fazer login');
+      setErro(err.response?.data?.erro || "Erro ao fazer login");
 
       setShake(true);
-      
-      setTimeout(() => setShake(false), 500)
-    }
 
+      setTimeout(() => setShake(false), 500);
+    }
   }
 
   return (
