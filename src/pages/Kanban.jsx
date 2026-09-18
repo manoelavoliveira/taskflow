@@ -205,7 +205,6 @@ function Kanban() {
               </div>
             </div>
 
-
             <div className="kanban-coluna andamento">
               <div className="kanban-coluna-header">
                 <h2>Em andamento</h2>
