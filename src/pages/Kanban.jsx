@@ -61,19 +61,25 @@ function Kanban() {
   }
 
   async function moverTarefa(id, novaColuna) {
-    const resposta = await api.put(`/tarefas/${id}`, { coluna: novaColuna });
-    // try {
-    //   const { data: tarefaMovida } = await axios.put(URL_API + "/" + id, {
-    //     coluna: novaColuna,
-    //   });
+    try {
+      const tarefa = tarefas.find(tarefa => tarefa.id === id); 
 
-    setTarefas(
-      tarefas.map((tarefa) => (tarefa.id === id ? resposta.data : tarefa)),
+      if (!tarefa) return;
+
+      const resposta = await api.put(`/tarefas/${id}`, { 
+        texto: tarefa.texto,
+        prioridade: tarefa.prioridade,
+        concluida: tarefa.concluida,
+        coluna: novaColuna 
+      }
     );
-    // } catch (e) {
-    //   setErro("Erro ao mover tarefa. Tente novamente.");
-    //   console.error(e);
-    // }
+      
+    setTarefas(
+      tarefas.map(tarefa => tarefa.id === id ? resposta.data : tarefa),
+    );
+    } catch (err) {
+      setErro("Erro ao mover tarefa. Tente novamente.");
+    }
   }
 
   const tarefasFiltradas = tarefas.filter((tarefa) => {
