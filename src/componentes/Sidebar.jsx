@@ -32,10 +32,10 @@ function Sidebar() {
           Sobre
         </NavLink>
       </nav>
-      <div className="sidebar-usuario">
+      <div className={styles.sidebar-usuario}>
         <span>Olá, {usuario?.nome ?? "Usuário"}</span>
-        <button className="btnLogout" onClick={handleLogout}>Sair</button>
       </div>
+      <button className={styles.btnLogout} onClick={handleLogout}>Sair</button>
     </aside>
   );
 }
