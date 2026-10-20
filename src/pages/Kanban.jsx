@@ -15,16 +15,32 @@ function Kanban() {
   const [colunaAtiva, setColunaAtiva] = useState("afazer");
   const [erro, setErro] = useState("");
   const [carregando, setCarregando] = useState(true);
+  const [listaPrioridades, setListaPrioridades] = useState([]);
+  const [listaUsuarios, setListaUsuarios] = useState([]);
+  const [listaProjetos, setListaProjetos] = useState([]);
 
   useEffect(() => {
     async function carregarTarefas() {
       try {
+
         setCarregando(true);
         setErro("");
 
-        const resposta = await api.get("/tarefas");
+        const [resPrioridades, respTarefas, respUsuarios, respProjetos] =
+          await Promise.all([
+            api.get("/prioridades"),
+            api.get("/tarefas"),
+            api.get("/usuarios"),
+            api.get("/projetos"),
+          ]);
 
-        setTarefas(resposta.data);
+        setListaPrioridades(resPrioridades.data);
+        setTarefas(respTarefas.data);
+        setListaUsuarios(respUsuarios.data);
+        setListaProjetos(respProjetos.data);
+        // const resposta = await api.get("/tarefas");
+
+        // setTarefas(resposta.data);
       } catch (e) {
         setErro("Erro ao carregar tarefas. Verifique a conexao.");
         console.error(e);
@@ -196,6 +212,7 @@ function Kanban() {
                   tarefas={tarefasFiltradas.filter(
                     (tarefa) => tarefa.coluna === "afazer",
                   )}
+                  prioridades={listaPrioridades}
                   onDeletar={deletarTarefa}
                   onEditar={abrirModalEditar}
                   onMover={moverTarefa}
@@ -226,6 +243,7 @@ function Kanban() {
                 tarefas={tarefasFiltradas.filter(
                   (tarefa) => tarefa.coluna === "andamento",
                 )}
+                prioridades={listaPrioridades}
                 onDeletar={deletarTarefa}
                 onEditar={abrirModalEditar}
                 onMover={moverTarefa}
@@ -255,6 +273,7 @@ function Kanban() {
                 tarefas={tarefasFiltradas.filter(
                   (tarefa) => tarefa.coluna === "concluido",
                 )}
+                prioridades={listaPrioridades}
                 onDeletar={deletarTarefa}
                 onEditar={abrirModalEditar}
                 onMover={moverTarefa}
@@ -270,6 +289,9 @@ function Kanban() {
           onSalvar={salvarTarefa}
           tarefa={tarefaEditando}
           coluna={colunaAtiva}
+          prioridades={listaPrioridades}
+          usuarios={listaUsuarios}
+          projetos={listaProjetos}
         />
       </main>
       <footer>
