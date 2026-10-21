@@ -6,7 +6,7 @@ import api, {mensagensDeErro} from "../api";
 
 function Login() {
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [senha_hash, setSenha] = useState("");
   const [erro, setErro] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -15,9 +15,9 @@ function Login() {
   async function handleLogin() {
     setErro("");
     try {
-      const resposta = await api.post("/auth/login", {
+      const resposta = await api.post("auth/login", {
         email,
-        senha,
+        senha_hash,
       });
 
       const { token, usuario } = resposta.data;
@@ -52,7 +52,7 @@ function Login() {
           className="login-input"
           type="password"
           placeholder="Senha"
-          value={senha}
+          value={senha_hash}
           onChange={(e) => setSenha(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleLogin()}
         />

@@ -4,7 +4,7 @@ function ItemTarefa({
   texto,
   prioridade = "media",
   concluida = false,
-  cidade,
+  rotuloPrioridade = "",
   onEditar,
   onDeletar,
   onMover = null,
@@ -23,12 +23,10 @@ function ItemTarefa({
         <span className={classeTexto} onDoubleClick={onEditar}>
           {texto}
         </span>
-
-        {cidade && <span className={styles.cidadeTag}>📍 {cidade}</span>}
       </div>
 
       <div className={styles.painelDireito}>
-        <span className={classePrioridade}>{prioridade}</span>
+        <span className={classePrioridade}>{rotuloPrioridade || prioridade}</span>
 
         <div className={styles.acoes}>
           {colunaAnterior && (

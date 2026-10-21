@@ -1,9 +1,9 @@
 import Header from "../componentes/Header.jsx";
 import { useState, useEffect } from "react";
 import ListaTarefas from "../componentes/ListaTarefas.jsx";
-import axios from "axios";
+//import axios from "axios";
 import ModalTarefa from "../componentes/ModalTarefa.jsx";
-import api from "../api";
+import api, { mensagensDeErro } from "../api";
 
 //const URL_API = "https://6a85aadd9c451dc67a63ec39.mockapi.io/tarefas";
 
@@ -22,7 +22,6 @@ function Kanban() {
   useEffect(() => {
     async function carregarTarefas() {
       try {
-
         setCarregando(true);
         setErro("");
 
@@ -71,30 +70,8 @@ function Kanban() {
       await api.delete(`/tarefas/${id}`);
 
       setTarefas(tarefas.filter((tarefa) => tarefa.id !== id));
-    } catch (err) {
-      setErro("Erro ao deletar tarefa. Tente novamente.");
-    }
-  }
-
-  async function moverTarefa(id, novaColuna) {
-    try {
-      const tarefa = tarefas.find(tarefa => tarefa.id === id); 
-
-      if (!tarefa) return;
-
-      const resposta = await api.put(`/tarefas/${id}`, { 
-        texto: tarefa.texto,
-        prioridade: tarefa.prioridade,
-        concluida: tarefa.concluida,
-        coluna: novaColuna 
-      }
-    );
-      
-    setTarefas(
-      tarefas.map(tarefa => tarefa.id === id ? resposta.data : tarefa),
-    );
-    } catch (err) {
-      setErro("Erro ao mover tarefa. Tente novamente.");
+    } catch (e) {
+        alert (mensagensDeErro(e).join('\n'));
     }
   }
 
@@ -115,22 +92,41 @@ function Kanban() {
   }
 
   async function salvarTarefa(dados) {
-    if (dados.id === undefined) {
-      try {
-        const resposta = await api.post("/tarefas", dados);
-        setTarefas([...tarefas, resposta.data]);
-      } catch (err) {
-        setErro("Erro ao criar tarefa.");
-      }
+    if (dados.id) {
+      const resposta = await api.put(`/tarefas/${dados.id}`, dados);
+      setTarefas(tarefas.map((t) => (t.id === dados.id ? resposta.data : t)))
+      // try {
+      //   const resposta = await api.post("/tarefas", dados);
+      //   setTarefas([...tarefas, resposta.data]);
+      // } catch (err) {
+      //   setErro("Erro ao criar tarefa.");
+      // }
     } else {
-      try {
-        const resposta = await api.put(`/tarefas/${dados.id}`, dados);
-        setTarefas(tarefas.map((t) => (t.id === dados.id ? resposta.data : t)));
-      } catch (err) {
-        setErro("Erro ao editar tarefa.");
-      }
+      const resposta = await api.post('/tarefas', dados);
+      setTarefas([...tarefas, resposta.data]);
+    }
+      // try {
+      //   const resposta = await api.put(`/tarefas/${dados.id}`, dados);
+      //   setTarefas(tarefas.map((t) => (t.id === dados.id ? resposta.data : t)));
+      // } catch (err) {
+      //   setErro("Erro ao editar tarefa.");
+      // }
+    }
+
+  async function moverTarefa(id, novaColuna) {
+    const tarefa = tarefas.find(tarefa => tarefa.id === id); 
+    try {
+      const resposta = await api.put(`/tarefas/${id}`,
+      {...tarefa, coluna: novaColuna });
+      
+    setTarefas(
+      tarefas.map(tarefa => tarefa.id === id ? resposta.data : tarefa),
+    );
+    } catch (e) {
+      alert (mensagensDeErro(e).join('\n'));
     }
   }
+
   //       {
   //         texto: dados.texto,
   //         prioridade: dados.prioridade,
