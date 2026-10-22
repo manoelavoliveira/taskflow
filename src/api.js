@@ -35,6 +35,8 @@ export function mensagensDeErro(erro) {
 
     if (dados.detalhes)
         return dados.detalhes;
+
+    return [dados.mensagem]
 }
 
 export default api;

@@ -61,19 +61,6 @@ function Kanban() {
     }
   }, [tarefas]);
 
-  async function deletarTarefa(id) {
-    // const confirmado = window.confirm(
-    //   "Tem certeza que deseja deletar esta tarefa?",
-    // );
-    // if (!confirmado) return;
-    try {
-      await api.delete(`/tarefas/${id}`);
-
-      setTarefas(tarefas.filter((tarefa) => tarefa.id !== id));
-    } catch (e) {
-        alert (mensagensDeErro(e).join('\n'));
-    }
-  }
 
   const tarefasFiltradas = tarefas.filter((tarefa) => {
     if (filtroPrioridade === "todas") return true;
@@ -127,6 +114,19 @@ function Kanban() {
     }
   }
 
+  async function deletarTarefa(id) {
+    // const confirmado = window.confirm(
+    //   "Tem certeza que deseja deletar esta tarefa?",
+    // );
+    // if (!confirmado) return;
+    try {
+      await api.delete(`/tarefas/${id}`);
+
+      setTarefas(tarefas.filter((tarefa) => tarefa.id !== id));
+    } catch (e) {
+        alert (mensagensDeErro(e).join('\n'));
+    }
+  }
   //       {
   //         texto: dados.texto,
   //         prioridade: dados.prioridade,

@@ -2,14 +2,17 @@ import styles from "./ItemTarefa.module.css";
 
 function ItemTarefa({
   texto,
-  prioridade = "media",
+  //prioridade = "media",
   concluida = false,
   rotuloPrioridade = "",
+  corPrioridade = null,
   onEditar,
   onDeletar,
   onMover = null,
   colunaAnterior = null,
   colunaProxima = null,
+  usuario = null,
+  projeto = null
 }) {
   const classeItem = `${styles.tarefa} ${concluida ? styles.concluida : ""} ${styles[prioridade]}`;
   const classeTexto = concluida
