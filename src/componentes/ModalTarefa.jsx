@@ -110,17 +110,18 @@ function ModalTarefa({
     <div className={styles.overlay} onClick={onFechar}>
       <div className={styles.card} onClick={(e) => e.stopPropagation()}>
         <h2>{tarefa ? "Editar tarefa" : "Nova tarefa"}</h2>
-        <input
+        {/* <input
           placeholder="Texto da tarefa"
           value={texto}
           onChange={(e) => setTexto(e.target.value)}
-        />
+        /> */}
         <div className={styles.campo}>
           <label htmlFor="tarefa-texto">Tarefa</label>
 
-          <input
+          <textarea
             id="tarefa-texto"
             placeholder="Descreva a tarefa"
+            rows={4}
             value={texto}
             onChange={(e) => setTexto(e.target.value)}
           />

@@ -22,15 +22,18 @@ function ListaTarefas({
 
       {tarefas.length > 0 && (
         <ul id="lista-tarefas">
-          {tarefas.map((tarefa) => {
-            const prioridade = prioridade.find(
-              p => p.id === tarefa.idprioridade
-            ); //o erro esta aquiiiiii
+          {tarefas.map((tarefa) => (
+            // const prioridade = prioridade.find(
+            //   p => p.id === tarefa.idprioridade
+            // ); //o erro esta aquiiiiii
             <ItemTarefa
               key={tarefa.id}
               texto={tarefa.texto}
               prioridade={CLASSE_PRIORIDADE[tarefa.idprioridade] || 'media'}
-              rotuloPrioridade={prioridade?.descricao}
+               rotuloPrioridade={prioridades?.descricao}
+              //rotuloPrioridade={tarefa.prioridade}
+              usuario={tarefa.usuario || 'Sem responsável'}
+              projeto={tarefa.projeto || 'Sem projeto'}
               // concluida={tarefa.concluida}
               // prioridade={tarefa.prioridade}
               // cidade={tarefa.cidade}
@@ -42,7 +45,7 @@ function ListaTarefas({
               colunaAnterior={colunaAnterior}
               colunaProxima={colunaProxima}
             />
-})}
+))}
         </ul>
       )}
     </section>
