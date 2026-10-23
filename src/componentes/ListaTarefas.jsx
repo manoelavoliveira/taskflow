@@ -30,7 +30,8 @@ function ListaTarefas({
               key={tarefa.id}
               texto={tarefa.texto}
               prioridade={CLASSE_PRIORIDADE[tarefa.idprioridade] || 'media'}
-               rotuloPrioridade={prioridades?.descricao}
+              rotuloPrioridade={prioridades?.descricao}
+              corPrioridade={tarefa.prioridade_cor}
               //rotuloPrioridade={tarefa.prioridade}
               usuario={tarefa.usuario || 'Sem responsável'}
               projeto={tarefa.projeto || 'Sem projeto'}

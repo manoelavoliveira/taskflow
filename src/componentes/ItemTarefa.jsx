@@ -3,7 +3,7 @@ import styles from "./ItemTarefa.module.css";
 function ItemTarefa({
   texto,
   //prioridade = "media",
-  concluida = false,
+  concluido = false,
   rotuloPrioridade = "",
   corPrioridade = null,
   onEditar,
@@ -14,22 +14,47 @@ function ItemTarefa({
   usuario = null,
   projeto = null
 }) {
-  const classeItem = `${styles.tarefa} ${concluida ? styles.concluida : ""} ${styles[prioridade]}`;
-  const classeTexto = concluida
-    ? styles.textoTarefaConcluida
-    : styles.textoTarefa;
-  const classePrioridade = `${styles["badge-prioridade"]} ${styles["badge-" + prioridade]}`;
+  // const classeItem = `${styles.tarefa} ${concluida ? styles.concluida : ""} ${styles[prioridade]}`;
+  // const classeTexto = concluida
+  //   ? styles.textoTarefaConcluida
+  //   : styles.textoTarefa;
+  //const classePrioridade = `${styles["badge-prioridade"]} ${styles["badge-" + prioridade]}`;
+
+  const classeItem = concluido ? styles.tarefa + " " + styles.concluido : styles.tarefa;
+
+  const estiloCor = corPrioridade ? {"--cor-prioridade": corPrioridade} : undefined;
+
+  const classeTexto = concluido ? styles.textoTarefa + " " + styles["texto-tarefa"] : styles.textoTarefa;
 
   return (
-    <li className={classeItem}>
+    <li className={classeItem} style={estiloCor}>
       <div className={styles.conteudoTarefa}>
         <span className={classeTexto} onDoubleClick={onEditar}>
           {texto}
         </span>
       </div>
 
-      <div className={styles.painelDireito}>
-        <span className={classePrioridade}>{rotuloPrioridade || prioridade}</span>
+      {(usuario || projeto) && (
+        <div className={styles.info}>
+          {usuario && (
+            <span className={styles.infoItem}>
+              <span className={styles.infoRotulo}>Responsável</span>
+              {usuario}
+            </span>
+          )}        
+        {projeto && (
+          <span className={styles.infoItem}>
+            <span className={styles.infoRotulo}>Projeto</span>
+            {projeto}
+          </span>
+        )} 
+        </div>
+      )}
+
+  
+
+      <div className={styles.rodape}>
+        <span className={styles["badge-prioridade"]}>{rotuloPrioridade || "Sem prioridade"}</span>
 
         <div className={styles.acoes}>
           {colunaAnterior && (

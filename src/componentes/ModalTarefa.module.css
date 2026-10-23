@@ -39,6 +39,13 @@
     border-color: #38BDF8; 
 }
 
+.card textarea {
+  resize: vertical;
+  min-height: 96px;
+  max-height: 260px;
+  line-height: 1.5;
+}
+
 .campo{
     display: flex; 
     flex-direction: 
