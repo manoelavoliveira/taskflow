@@ -169,7 +169,7 @@ function ModalTarefa({
           >
             {prioridades.map((pr) => (
               <option key={pr.id} value={pr.id}>
-                {pr.nome}
+                {pr.descricao}
               </option>
             ))}
           </select>
