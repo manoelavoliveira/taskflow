@@ -51,12 +51,13 @@ function ItemTarefa({
         </div>
       )}
 
-  
-
-      <div className={styles.rodape}>
+      <div className={styles.linhaSegundaria}>
         <span className={styles["badge-prioridade"]}>{rotuloPrioridade || "Sem prioridade"}</span>
 
-        <div className={styles.acoes}>
+      {/* <div className={styles.rodape}> */}
+        {/* <span className=io{styles["badge-prridade"]}>{rotuloPrioridade || "Sem prioridade"}</span> */}
+
+        <div className={styles.acoesRodape}>
           {colunaAnterior && (
             <button
               className={styles.btnMover}
