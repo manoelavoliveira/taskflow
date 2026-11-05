@@ -19,9 +19,12 @@
 .conteudoTarefa {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  flex: 1; 
-  min-width: 0; 
+  gap: 12px;
+  /* flex: 1; 
+  min-width: 0;  */
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .textoTarefa {
@@ -31,8 +34,8 @@
   line-height: 1.45;
   color: var(--text);
   white-space: normal;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .info {

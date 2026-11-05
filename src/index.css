@@ -47,15 +47,6 @@ main {
   align-items: stretch;
 }
 
-#input-Cep {
-  flex: 1;
-  background-color: #16213a;
-  color: white;
-  border: 1px solid #334155;
-  border-radius: 8px;
-  outline: none;
-}
-
 #contadores {
   display: flex;
   justify-content: center;
