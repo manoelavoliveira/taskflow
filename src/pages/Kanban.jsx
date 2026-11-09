@@ -115,10 +115,10 @@ function Kanban() {
   }
 
   async function deletarTarefa(id) {
-    // const confirmado = window.confirm(
-    //   "Tem certeza que deseja deletar esta tarefa?",
-    // );
-    // if (!confirmado) return;
+    const confirmado = window.confirm(
+      "Tem certeza que deseja deletar esta tarefa?",
+    );
+    if (!confirmado) return;
     try {
       await api.delete(`/tarefas/${id}`);
 
