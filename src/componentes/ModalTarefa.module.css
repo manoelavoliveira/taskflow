@@ -40,10 +40,12 @@
 }
 
 .card textarea {
-  resize: vertical;
-  min-height: 96px;
-  max-height: 260px;
-  line-height: 1.5;
+    background: #0D1B2A; 
+    color: #E2E8F0;
+    border: 1px solid #334155; 
+    border-radius: 6px;
+    padding: 10px 14px; font-size: 1rem;
+    font-family: inherit; outline: none;
 }
 
 .campo{

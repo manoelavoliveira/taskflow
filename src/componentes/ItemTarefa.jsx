@@ -2,6 +2,7 @@ import styles from "./ItemTarefa.module.css";
 
 function ItemTarefa({
   texto,
+  tarefa,
   //prioridade = "media",
   concluido = false,
   rotuloPrioridade = "",
@@ -12,7 +13,7 @@ function ItemTarefa({
   colunaAnterior = null,
   colunaProxima = null,
   usuario = null,
-  projeto = null
+  projeto = null,
 }) {
   // const classeItem = `${styles.tarefa} ${concluida ? styles.concluida : ""} ${styles[prioridade]}`;
   // const classeTexto = concluida
@@ -20,14 +21,33 @@ function ItemTarefa({
   //   : styles.textoTarefa;
   //const classePrioridade = `${styles["badge-prioridade"]} ${styles["badge-" + prioridade]}`;
 
-  const classeItem = concluido ? styles.tarefa + " " + styles.concluido : styles.tarefa;
+  const classeItem = concluido
+    ? styles.tarefa + " " + styles.concluido
+    : styles.tarefa;
 
-  const estiloCor = corPrioridade ? {"--cor-prioridade": corPrioridade} : undefined;
+  const estiloCor = corPrioridade
+    ? { "--cor-prioridade": corPrioridade }
+    : undefined;
 
-  const classeTexto = concluido ? styles.textoTarefa + " " + styles["texto-tarefa"] : styles.textoTarefa;
+  const classeTexto = concluido
+    ? styles.textoTarefa + " " + styles["texto-tarefa"]
+    : styles.textoTarefa;
+
+  // const textoPrioridade =
+  //   typeof rotuloPrioridade === "object"
+  //     ? rotuloPrioridade?.nome ||
+  //       rotuloPrioridade?.titulo ||
+  //       rotuloPrioridade?.descricao ||
+  //       "Sem prioridade"
+  //     : rotuloPrioridade || "Sem prioridade";
+  const corFinal = corPrioridade || tarefa?.prioridade?.cor || tarefa?.prioridade_cor || '#e0e0e0';
+  const prioridadeObj = tarefa?.prioridade || rotuloPrioridade;
+  const textoPrioridade = typeof prioridadeObj === 'object'
+    ? (prioridadeObj?.nome || prioridadeObj?.titulo || prioridadeObj?.descricao || 'Sem prioridade')
+    : (prioridadeObj || 'Sem prioridade');
 
   return (
-    <li className={classeItem} style={estiloCor}>
+    <li className={classeItem} style={{ borderLeft: `5px solid ${corFinal}`}}>
       <div className={styles.conteudoTarefa}>
         <span className={classeTexto} onDoubleClick={onEditar}>
           {texto}
@@ -41,51 +61,54 @@ function ItemTarefa({
               <span className={styles.infoRotulo}>Responsável</span>
               {usuario}
             </span>
-          )}        
-        {projeto && (
-          <span className={styles.infoItem}>
-            <span className={styles.infoRotulo}>Projeto</span>
-            {projeto}
-          </span>
-        )} 
+          )}
+          {projeto && (
+            <span className={styles.infoItem}>
+              <span className={styles.infoRotulo}>Projeto</span>
+              {projeto}
+            </span>
+          )}
         </div>
       )}
 
-      <div className={styles.linhaSegundaria}>
-        <span className={styles["badge-prioridade"]}>{rotuloPrioridade || "Sem prioridade"}</span>
+      <span
+        className={styles.prioridade}
+        style={{ backgroundColor: corFinal }}
+      >
+        {textoPrioridade}
+      </span>
 
       {/* <div className={styles.rodape}> */}
-        {/* <span className=io{styles["badge-prridade"]}>{rotuloPrioridade || "Sem prioridade"}</span> */}
+      {/* <span className=io{styles["badge-prridade"]}>{rotuloPrioridade || "Sem prioridade"}</span> */}
 
-        <div className={styles.acoesRodape}>
-          {colunaAnterior && (
-            <button
-              className={styles.btnMover}
-              onClick={() => onMover(colunaAnterior)}
-              title="Mover para coluna anterior"
-            >
-              ←
-            </button>
-          )}
-
-          {colunaProxima && (
-            <button
-              className={styles.btnMover}
-              onClick={() => onMover(colunaProxima)}
-              title="Mover para próxima coluna"
-            >
-              →
-            </button>
-          )}
-
+      <div className={styles.acoesRodape}>
+        {colunaAnterior && (
           <button
-            className={styles.btnDeletar}
-            onClick={onDeletar}
-            title="Excluir"
+            className={styles.btnMover}
+            onClick={() => onMover(colunaAnterior)}
+            title="Mover para coluna anterior"
           >
-            ×
+            ←
           </button>
-        </div>
+        )}
+
+        {colunaProxima && (
+          <button
+            className={styles.btnMover}
+            onClick={() => onMover(colunaProxima)}
+            title="Mover para próxima coluna"
+          >
+            →
+          </button>
+        )}
+
+        <button
+          className={styles.btnDeletar}
+          onClick={onDeletar}
+          title="Excluir"
+        >
+          ×
+        </button>
       </div>
     </li>
   );

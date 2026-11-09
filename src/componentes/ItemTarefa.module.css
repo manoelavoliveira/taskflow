@@ -1,4 +1,6 @@
 .tarefa {
+  width: 100%;
+  box-sizing: border-box;
   padding: 12px 14px;
   border-radius: 8px;
   background-color: #061e55;
@@ -9,6 +11,7 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin-bottom: 8px;
+  flex-direction: column;
 }
 
 .tarefa:hover {
@@ -29,7 +32,7 @@
 
 .textoTarefa {
   min-width: 0;
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 500;
   line-height: 1.45;
   color: var(--text);
@@ -41,9 +44,10 @@
 .info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  font-size: 0.8rem;
-  color: #CBD5E1;
+  gap: 6px;
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: 25px;
+  border-radius: 4px;
 }
 
 .infoItem {
@@ -82,15 +86,18 @@
 
 .Acoesrodape {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column;*/
   align-items: flex-end;
+  justify-content: flex-end;
   gap: 8px;
   flex-shrink: 0;
+  margin-top: 8px;
 }
 
-.badge-prioridade {
-  font-size: 0.65rem;
-  font-weight: 700;
+.prioridade {
+  font-size: 0.75rem;
+  /* font-weight: 700; */
+  margin-top: 4px;
   padding: 2px 8px;
   border-radius: 12px;
   letter-spacing: 0.05em;
@@ -137,6 +144,7 @@
 .btnDeletar:hover {
   color: #ef4444;
 }
+
 
 /* .alta { border-left: 3px solid #ef4444; }
 .media { border-left: 3px solid #f59e0b; }
