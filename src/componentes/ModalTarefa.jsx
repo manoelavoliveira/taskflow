@@ -93,7 +93,7 @@ function ModalTarefa({
     } finally {
       setSalvando(false);
     }
-    // // if (texto.trim() === "") return;
+     if (texto.trim() === "") return;
     // onSalvar({
     //   id: tarefa?.id,
     //   texto,
