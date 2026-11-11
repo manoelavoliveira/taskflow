@@ -29,6 +29,9 @@ function ModalTarefa({
   // const [prioridade, setPrioridade] = useState("media");
 
   useEffect(() => {
+    
+    if (!aberto) return;
+
     setErros([]);
     if (tarefa) {
       setTexto(tarefa.texto);
@@ -93,7 +96,12 @@ function ModalTarefa({
     } finally {
       setSalvando(false);
     }
-     if (texto.trim() === "") return;
+
+     if (!texto.trim()) {
+      setErros("O texto é obrigatório!")
+      
+      return;
+     } 
     // onSalvar({
     //   id: tarefa?.id,
     //   texto,
