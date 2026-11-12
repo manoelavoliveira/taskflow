@@ -15,7 +15,7 @@ api.interceptors.response.use(
   (resposta) => resposta,
 
   (erro) => {
-    const ehLogin = erro.config?.url?.includes("/auth/login");
+    const ehLogin = erro.config?.url?.includes("auth/login");
 
     if (erro.response?.status === 401 && !ehLogin) {
       localStorage.removeItem("token");
@@ -31,6 +31,10 @@ export function mensagensDeErro(erro) {
   if (!dados) {
     return ["Não foi possivel conectar à API."];
   }
+
+  if (typeof dados === 'string') {
+        return [dados];
+    }
 
   if (dados.detalhes) return dados.detalhes;
 

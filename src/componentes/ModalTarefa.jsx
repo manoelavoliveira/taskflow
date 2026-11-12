@@ -26,7 +26,6 @@ function ModalTarefa({
   const [salvando, setSalvando] = useState(false);
 
   useEffect(() => {
-    if (!aberto) return;
 
     setErros([]);
 
@@ -44,9 +43,9 @@ function ModalTarefa({
   }, [tarefa, aberto]);
 
   useEffect(() => {
-    console.log(aberto);
-    if (!aberto) return;
-
+   if (!aberto) return; 
+   console.log(aberto);
+    
     function handleEsc(e) {
       if (e.key === "Escape") onFechar();
     }
@@ -62,7 +61,7 @@ function ModalTarefa({
     setErros([]);
 
     if (!texto.trim()) {
-      setErros("O texto é obrigatório!");
+      setErros(["O texto é obrigatório!"]);
 
       return;
     }
