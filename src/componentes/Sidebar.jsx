@@ -6,7 +6,6 @@ function Sidebar() {
   const { usuario, logout } = useAuth();
   const linkClass = ({ isActive }) =>
     isActive ? styles.link + " " + styles.ativo : styles.link;
-  //const { usuario } = useAuth();
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -20,22 +19,19 @@ function Sidebar() {
         <h1>TaskFlow</h1>
       </div>
       <nav className={styles.nav}>
-        {/*{token && (
-          <NavLink to="/" className={linkClass}>
-            Dashboard
-          </NavLink>
-        )}*/}
         <NavLink to="/" className={linkClass}>
-            Dashboard
-          </NavLink>
+          Dashboard
+        </NavLink>
         <NavLink to="/sobre" className={linkClass}>
           Sobre
         </NavLink>
       </nav>
-      <div className={styles.sidebar-usuario}>
+      <div className={styles.sidebar - usuario}>
         <span>Olá, {usuario?.nome ?? "Usuário"}</span>
       </div>
-      <button className={styles.btnLogout} onClick={handleLogout}>Sair</button>
+      <button className={styles.btnLogout} onClick={handleLogout}>
+        Sair
+      </button>
     </aside>
   );
 }

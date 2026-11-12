@@ -1,5 +1,5 @@
 import ItemTarefa from "./ItemTarefa";
-const CLASSE_PRIORIDADE = { 1: 'alta', 2: 'media', 3: 'baixa'};
+const CLASSE_PRIORIDADE = { 1: "alta", 2: "media", 3: "baixa" };
 
 function ListaTarefas({
   tarefas,
@@ -10,8 +10,6 @@ function ListaTarefas({
   colunaAnterior = null,
   colunaProxima = null,
 }) {
-
-  
   return (
     <section id="lista-section">
       {tarefas.length === 0 && (
@@ -23,21 +21,13 @@ function ListaTarefas({
       {tarefas.length > 0 && (
         <ul id="lista-tarefas">
           {tarefas.map((tarefa) => (
-            // const prioridade = prioridade.find(
-            //   p => p.id === tarefa.idprioridade
-            // ); //o erro esta aquiiiiii
             <ItemTarefa
               key={tarefa.id}
               texto={tarefa.texto}
-              // prioridade={CLASSE_PRIORIDADE[tarefa.idprioridade] || 'media'}
               rotuloPrioridade={tarefa.prioridade}
               corPrioridade={tarefa.prioridade_cor}
-              //rotuloPrioridade={tarefa.prioridade}
-              usuario={tarefa.usuario || 'Sem responsável'}
-              projeto={tarefa.projeto || 'Sem projeto'}
-              // concluida={tarefa.concluida}
-              // prioridade={tarefa.prioridade}
-              // cidade={tarefa.cidade}
+              usuario={tarefa.usuario || "Sem responsável"}
+              projeto={tarefa.projeto || "Sem projeto"}
               onDeletar={() => onDeletar(tarefa.id)}
               onEditar={onEditar ? () => onEditar(tarefa) : undefined}
               onMover={
@@ -46,7 +36,7 @@ function ListaTarefas({
               colunaAnterior={colunaAnterior}
               colunaProxima={colunaProxima}
             />
-))}
+          ))}
         </ul>
       )}
     </section>

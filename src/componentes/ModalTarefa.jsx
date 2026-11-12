@@ -24,29 +24,22 @@ function ModalTarefa({
   const [idProjeto, setIdProjeto] = useState("");
   const [erros, setErros] = useState([]);
   const [salvando, setSalvando] = useState(false);
-  // const [cep, setCep] = useState("");
-  // const [cidade, setCidade] = useState("");
-  // const [prioridade, setPrioridade] = useState("media");
 
   useEffect(() => {
-    
     if (!aberto) return;
 
     setErros([]);
+
     if (tarefa) {
       setTexto(tarefa.texto);
       setIdPrioridade(tarefa.idprioridade);
       setIdUsuario(tarefa.usuario_id);
       setIdProjeto(tarefa.projeto_id);
-      // setCidade(tarefa.cidade || "");
-      // setPrioridade(tarefa.prioridade);
     } else {
       setTexto("");
       setIdPrioridade(2);
       setIdUsuario(usuario?.id || usuarios[0]?.id || "");
       setIdProjeto(projetos[0]?.id || "");
-      // setCidade("");
-      // setPrioridade("media");
     }
   }, [tarefa, aberto]);
 
@@ -65,20 +58,15 @@ function ModalTarefa({
     };
   }, [aberto, onFechar]);
 
-  // async function consultarCidade(cepDigitado) {
-  //   if (cepDigitado.trim().length < 8) return;
-  //   try {
-  //     const { data } = await axios.get(
-  //       `https://viacep.com.br/ws/${cepDigitado}/json/`,
-  //     );
-  //     if (!data.erro) setCidade(data.localidade + "/" + data.uf);
-  //   } catch (e) {
-  //     console.error("Erro ao consultar o CEP:", e);
-  //   }
-  // }
-
   async function handleSalvar() {
     setErros([]);
+
+    if (!texto.trim()) {
+      setErros("O texto é obrigatório!");
+
+      return;
+    }
+
     setSalvando(true);
     try {
       await onSalvar({
@@ -96,20 +84,6 @@ function ModalTarefa({
     } finally {
       setSalvando(false);
     }
-
-     if (!texto.trim()) {
-      setErros("O texto é obrigatório!")
-      
-      return;
-     } 
-    // onSalvar({
-    //   id: tarefa?.id,
-    //   texto,
-    //   // cidade,
-    //   // prioridade,
-    //   coluna: tarefa?.coluna || coluna,
-    // });
-    // onFechar();
   }
 
   if (!aberto) return null;
@@ -118,11 +92,6 @@ function ModalTarefa({
     <div className={styles.overlay} onClick={onFechar}>
       <div className={styles.card} onClick={(e) => e.stopPropagation()}>
         <h2>{tarefa ? "Editar tarefa" : "Nova tarefa"}</h2>
-        {/* <input
-          placeholder="Texto da tarefa"
-          value={texto}
-          onChange={(e) => setTexto(e.target.value)}
-        /> */}
         <div className={styles.campo}>
           <label htmlFor="tarefa-texto">Tarefa</label>
 
@@ -182,23 +151,7 @@ function ModalTarefa({
             ))}
           </select>
         </div>
-        {/* <input
-          placeholder="CEP (Opcional)"
-          value={cep}
-          onChange={(e) => {
-            setCep(e.target.value);
-            consultarCidade(e.target.value);
-          }}
-        />
-        {cidade && <p className={styles.cidade}>{cidade}</p>} */}
-        {/* <select
-          value={prioridade}
-          onChange={(e) => setPrioridade(e.target.value)}
-        >
-          <option value="alta">Alta</option>
-          <option value="media">Média</option>
-          <option value="baixa">Baixa</option>
-        </select> */}
+
         {erros.length > 0 && (
           <ul className={styles.erros}>
             {erros.map((mensagem, i) => (
@@ -206,6 +159,7 @@ function ModalTarefa({
             ))}
           </ul>
         )}
+
         <div className={styles.botoes}>
           <button onClick={onFechar}>Cancelar</button>
           <button onClick={handleSalvar} disabled={salvando}>

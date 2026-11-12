@@ -1,11 +1,8 @@
 import Header from "../componentes/Header.jsx";
 import { useState, useEffect } from "react";
 import ListaTarefas from "../componentes/ListaTarefas.jsx";
-//import axios from "axios";
 import ModalTarefa from "../componentes/ModalTarefa.jsx";
 import api, { mensagensDeErro } from "../api";
-
-//const URL_API = "https://6a85aadd9c451dc67a63ec39.mockapi.io/tarefas";
 
 function Kanban() {
   const [tarefas, setTarefas] = useState([]);
@@ -37,9 +34,6 @@ function Kanban() {
         setTarefas(respTarefas.data);
         setListaUsuarios(respUsuarios.data);
         setListaProjetos(respProjetos.data);
-        // const resposta = await api.get("/tarefas");
-
-        // setTarefas(resposta.data);
       } catch (e) {
         setErro("Erro ao carregar tarefas. Verifique a conexao.");
         console.error(e);
@@ -61,7 +55,6 @@ function Kanban() {
     }
   }, [tarefas]);
 
-
   const tarefasFiltradas = tarefas.filter((tarefa) => {
     if (filtroPrioridade === "todas") return true;
     return tarefa.prioridade === filtroPrioridade;
@@ -81,36 +74,26 @@ function Kanban() {
   async function salvarTarefa(dados) {
     if (dados.id) {
       const resposta = await api.put(`/tarefas/${dados.id}`, dados);
-      setTarefas(tarefas.map((t) => (t.id === dados.id ? resposta.data : t)))
-      // try {
-      //   const resposta = await api.post("/tarefas", dados);
-      //   setTarefas([...tarefas, resposta.data]);
-      // } catch (err) {
-      //   setErro("Erro ao criar tarefa.");
-      // }
+      setTarefas(tarefas.map((t) => (t.id === dados.id ? resposta.data : t)));
     } else {
-      const resposta = await api.post('/tarefas', dados);
+      const resposta = await api.post("/tarefas", dados);
       setTarefas([...tarefas, resposta.data]);
     }
-      // try {
-      //   const resposta = await api.put(`/tarefas/${dados.id}`, dados);
-      //   setTarefas(tarefas.map((t) => (t.id === dados.id ? resposta.data : t)));
-      // } catch (err) {
-      //   setErro("Erro ao editar tarefa.");
-      // }
-    }
+  }
 
   async function moverTarefa(id, novaColuna) {
-    const tarefa = tarefas.find(tarefa => tarefa.id === id); 
+    const tarefa = tarefas.find((tarefa) => tarefa.id === id);
     try {
-      const resposta = await api.put(`/tarefas/${id}`,
-      {...tarefa, coluna: novaColuna });
-      
-    setTarefas(
-      tarefas.map(tarefa => tarefa.id === id ? resposta.data : tarefa),
-    );
+      const resposta = await api.put(`/tarefas/${id}`, {
+        ...tarefa,
+        coluna: novaColuna,
+      });
+
+      setTarefas(
+        tarefas.map((tarefa) => (tarefa.id === id ? resposta.data : tarefa)),
+      );
     } catch (e) {
-      alert (mensagensDeErro(e).join('\n'));
+      alert(mensagensDeErro(e).join("\n"));
     }
   }
 
@@ -124,33 +107,9 @@ function Kanban() {
 
       setTarefas(tarefas.filter((tarefa) => tarefa.id !== id));
     } catch (e) {
-        alert (mensagensDeErro(e).join('\n'));
+      alert(mensagensDeErro(e).join("\n"));
     }
   }
-  //       {
-  //         texto: dados.texto,
-  //         prioridade: dados.prioridade,
-  //         cidade: dados.cidade,
-  //         coluna: dados.coluna,
-  //       },
-  //     );
-  //     setTarefas((tarefasAtuais) =>
-  //       tarefasAtuais.map((tarefa) =>
-  //         tarefa.id === dados.id ? tarefaEditada : tarefa,
-  //       ),
-  //     );
-  //   } else {
-  //     const { data: novaTarefa } = await axios.post(URL_API, {
-  //       texto: dados.texto,
-  //       prioridade: dados.prioridade,
-  //       cidade: dados.cidade,
-  //       coluna: dados.coluna,
-  //     });
-  //     setTarefas((tarefasAtuais) => [...tarefasAtuais, novaTarefa]);
-  //   }
-  // } catch (e) {
-  //   setErro("Erro ao salvar tarefa. Tente novamente.");
-  //   console.error(e);
 
   return (
     <div id="app">
@@ -158,7 +117,7 @@ function Kanban() {
         titulo="TaskFlow"
         subtitulo="Gerencie suas tarefas"
         tarefas={tarefas}
-      />   
+      />
       <main className="container">
         {carregando && (
           <p style={{ textAlign: "center", color: "#94A3B8" }}>

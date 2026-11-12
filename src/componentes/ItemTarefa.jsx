@@ -3,7 +3,6 @@ import styles from "./ItemTarefa.module.css";
 function ItemTarefa({
   texto,
   tarefa,
-  //prioridade = "media",
   concluido = false,
   rotuloPrioridade = "",
   corPrioridade = null,
@@ -15,12 +14,6 @@ function ItemTarefa({
   usuario = null,
   projeto = null,
 }) {
-  // const classeItem = `${styles.tarefa} ${concluida ? styles.concluida : ""} ${styles[prioridade]}`;
-  // const classeTexto = concluida
-  //   ? styles.textoTarefaConcluida
-  //   : styles.textoTarefa;
-  //const classePrioridade = `${styles["badge-prioridade"]} ${styles["badge-" + prioridade]}`;
-
   const classeItem = concluido
     ? styles.tarefa + " " + styles.concluido
     : styles.tarefa;
@@ -33,21 +26,22 @@ function ItemTarefa({
     ? styles.textoTarefa + " " + styles["texto-tarefa"]
     : styles.textoTarefa;
 
-  // const textoPrioridade =
-  //   typeof rotuloPrioridade === "object"
-  //     ? rotuloPrioridade?.nome ||
-  //       rotuloPrioridade?.titulo ||
-  //       rotuloPrioridade?.descricao ||
-  //       "Sem prioridade"
-  //     : rotuloPrioridade || "Sem prioridade";
-  const corFinal = corPrioridade || tarefa?.prioridade?.cor || tarefa?.prioridade_cor || '#e0e0e0';
+  const corFinal =
+    corPrioridade ||
+    tarefa?.prioridade?.cor ||
+    tarefa?.prioridade_cor ||
+    "#e0e0e0";
   const prioridadeObj = tarefa?.prioridade || rotuloPrioridade;
-  const textoPrioridade = typeof prioridadeObj === 'object'
-    ? (prioridadeObj?.nome || prioridadeObj?.titulo || prioridadeObj?.descricao || 'Sem prioridade')
-    : (prioridadeObj || 'Sem prioridade');
+  const textoPrioridade =
+    typeof prioridadeObj === "object"
+      ? prioridadeObj?.nome ||
+        prioridadeObj?.titulo ||
+        prioridadeObj?.descricao ||
+        "Sem prioridade"
+      : prioridadeObj || "Sem prioridade";
 
   return (
-    <li className={classeItem} style={{ borderLeft: `5px solid ${corFinal}`}}>
+    <li className={classeItem} style={{ borderLeft: `5px solid ${corFinal}` }}>
       <div className={styles.conteudoTarefa}>
         <span className={classeTexto} onDoubleClick={onEditar}>
           {texto}
@@ -71,15 +65,9 @@ function ItemTarefa({
         </div>
       )}
 
-      <span
-        className={styles.prioridade}
-        style={{ backgroundColor: corFinal }}
-      >
+      <span className={styles.prioridade} style={{ backgroundColor: corFinal }}>
         {textoPrioridade}
       </span>
-
-      {/* <div className={styles.rodape}> */}
-      {/* <span className=io{styles["badge-prridade"]}>{rotuloPrioridade || "Sem prioridade"}</span> */}
 
       <div className={styles.acoesRodape}>
         {colunaAnterior && (

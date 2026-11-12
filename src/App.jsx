@@ -9,14 +9,16 @@ import RotaPrivada from "./componentes/RotaPrivada";
 import { useAuth } from "./contexts/AuthContext";
 
 function App() {
-
   const { token } = useAuth();
   //console.log(useAuth())
   return (
     <div className="app-layout">
       {token && <Sidebar />}
 
-      <main className="app-conteudo" style={{ marginLeft: token ? '220px' : '0' }}>
+      <main
+        className="app-conteudo"
+        style={{ marginLeft: token ? "220px" : "0" }}
+      >
         <Routes>
           <Route
             path="/"

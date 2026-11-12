@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import "./Login.css";
 import { useAuth } from "../contexts/AuthContext";
-import api, {mensagensDeErro} from "../api";
+import api, { mensagensDeErro } from "../api";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -24,7 +24,6 @@ function Login() {
 
       login(usuario, token);
       navigate("/");
-      
     } catch (err) {
       setErro(mensagensDeErro(err).join(" "));
 

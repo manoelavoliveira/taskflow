@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
   }
 
   const logado = !!token;
-  
+
   return (
     <AuthContext.Provider value={{ token, usuario, login, logout, logado }}>
       {children}
