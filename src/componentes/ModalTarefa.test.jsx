@@ -60,7 +60,7 @@ describe("ModalTarefa", () => {
       coluna: "andamento",
       idprioridade: 1,
       usuario_id: 4,
-      projeto_id: 25,
+      projeto_id: 10,
     };
     abrirModal({ tarefa });
 
@@ -69,5 +69,64 @@ describe("ModalTarefa", () => {
     ).toBeInTheDocument();
     expect(screen.getByLabelText("Tarefa")).toHaveValue("Revisar a API");
     expect(screen.getByLabelText("Responsável")).toHaveValue("4");
-});
+    expect(screen.getByLabelText("Projeto")).toHaveValue("10");
+    expect(screen.getByLabelText("Prioridade")).toHaveValue("1");
+  });
+
+  test("o que a pessoa digita aparece no campo", async () => {
+    const user = userEvent.setup();
+    abrirModal();
+
+    const campo = screen.getByLabelText("Tarefa");
+    await user.type(campo, "Estudar Mocks");
+
+    expect(campo).toHaveValue("Estudar Mocks");
+  });
+
+  test("Cancelar e Esc chamam onFechar", async () => {
+    const user = userEvent.setup();
+    const onFechar = vi.fn();
+    abrirModal({ onFechar });
+
+    await user.click(screen.getByRole("button", { name: "Cancelar" }));
+    await user.keyboard("{Escape}");
+
+    expect(onFechar).toHaveBeenCalledTimes(2);
+  });
+
+  test("Salvar envia os dados e fecha o modal", async () => {
+    const user = userEvent.setup();
+    const onSalvar = vi.fn().mockResolvedValue();
+    const onFechar = vi.fn();
+
+    abrirModal({ onSalvar, onFechar, coluna: "afazer" });
+
+    await user.type(screen.getByLabelText("Tarefa"), "Estudar mocks");
+    await user.selectOptions(screen.getByLabelText("Prioridade"), "Alta");
+    await user.click(screen.getByRole("button", { name: "Salvar" }));
+
+    expect(onSalvar).toHaveBeenCalledWith({
+      texto: "Estudar mocks",
+      coluna: "afazer",
+      idprioridade: 1,
+      usuario_id: 1,
+      projeto_id: 10,
+    });
+    expect(onFechar).toHaveBeenCalledTimes(1);
+  });
+
+  test("a API recusa: mostra os erros e não fecha", async () => {
+    const user = userEvent.setup();
+    const erro400 = {
+      response: { data: { erro: { detalhes: ["O texto é obrigatório."]}}},
+    };
+    const onSalvar = vi.fn().mockRejectedValue(erro400);
+    const onFechar = vi.fn();
+    abrirModal({ onSalvar, onFechar });
+
+    await user.click(screen.getByRole("button", { name: "Salvar" }));
+
+    expect(await screen.findByText("O texto é obrigatório.")).toBeInTheDocument();
+    expect(onFechar).not.toHaveBeenCalled();
+  })
 });

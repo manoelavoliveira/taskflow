@@ -61,7 +61,7 @@ function ModalTarefa({
     setErros([]);
 
     if (!texto.trim()) {
-      setErros(["O texto é obrigatório!"]);
+      setErros(["O texto é obrigatório."]);
 
       return;
     }
