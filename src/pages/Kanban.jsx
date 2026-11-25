@@ -157,6 +157,7 @@ function Kanban() {
                 <button
                   className="kanban-btn-add"
                   onClick={() => abrirModalCriar("afazer")}
+                  title="Nova tarefa em A Fazer"
                 >
                   {" "}
                   +{" "}
@@ -189,6 +190,7 @@ function Kanban() {
                 <button
                   className="kanban-btn-add"
                   onClick={() => abrirModalCriar("andamento")}
+                  title="Nova tarefa em Andamento"
                 >
                   {" "}
                   +{" "}
@@ -219,6 +221,7 @@ function Kanban() {
                 <button
                   className="kanban-btn-add"
                   onClick={() => abrirModalCriar("concluido")}
+                  title="Nova tarefa em Concluido"
                 >
                   {" "}
                   +{" "}
