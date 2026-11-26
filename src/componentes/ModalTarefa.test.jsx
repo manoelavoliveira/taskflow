@@ -118,7 +118,7 @@ describe("ModalTarefa", () => {
   test("a API recusa: mostra os erros e não fecha", async () => {
     const user = userEvent.setup();
     const erro400 = {
-      response: { data: { erro: { detalhes: ["O texto é obrigatório."]}}},
+      response: { data: { erro: { detalhes: ["O texto é obrigatório."] } } },
     };
     const onSalvar = vi.fn().mockRejectedValue(erro400);
     const onFechar = vi.fn();
@@ -126,7 +126,57 @@ describe("ModalTarefa", () => {
 
     await user.click(screen.getByRole("button", { name: "Salvar" }));
 
-    expect(await screen.findByText("O texto é obrigatório.")).toBeInTheDocument();
+    expect(
+      await screen.findByText("O texto é obrigatório."),
+    ).toBeInTheDocument();
     expect(onFechar).not.toHaveBeenCalled();
-  })
+  });
+
+  test('com um onSalvar que nunca responde, o botão vira "Salvando..." e fica desabilitado', async () => {
+    const user = userEvent.setup();
+    const onSalvar = vi.fn().mockReturnValue(new Promise(() => {}));
+    abrirModal({ onSalvar });
+
+    await user.type(screen.getByLabelText("Tarefa"), "Estudar React");
+    await user.click(screen.getByRole("button", { name: "Salvar" }));
+
+    expect(screen.getByRole("button", { name: "Salvando..." })).toBeDisabled();
+    expect(screen.getByText("Salvando...")).toBeInTheDocument();
+  });
+
+  test("ao editar, o onSalvar recebe o id e a coluna da tarefa (use objectContaining)", async () => {
+    const user = userEvent.setup();
+    const onSalvar = vi.fn().mockResolvedValue();
+    const onFechar = vi.fn();
+    const tarefa = {
+      id: 7,
+      texto: "Revisar a API",
+      coluna: "andamento",
+      idprioridade: 1,
+      usuario_id: 4,
+      projeto_id: 10,
+    };
+    abrirModal({ onSalvar, onFechar, tarefa });
+
+    await user.click(screen.getByRole("button", { name: "Salvar" }));
+
+    expect(onSalvar).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 7, coluna: "andamento" }),
+    );
+    expect(onFechar).toHaveBeenCalledTimes(1);
+  });
+
+  test("escolher Carlos Melo como responsável envia usuario_id 4", async () => {
+    const user = userEvent.setup();
+    const onSalvar = vi.fn().mockResolvedValue();
+    abrirModal({ onSalvar });
+
+    await user.type(screen.getByLabelText("Tarefa"), "Estudar React");
+    await user.selectOptions(screen.getByLabelText("Responsável"), "4");
+    await user.click(screen.getByRole("button", { name: "Salvar" }));
+
+    expect(onSalvar).toHaveBeenCalledWith(
+      expect.objectContaining({ usuario_id: 4 }),
+    );
+  });
 });

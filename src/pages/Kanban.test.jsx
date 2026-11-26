@@ -1,7 +1,7 @@
 import { describe, test, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Kanban from "../pages/Kanban";
+import Kanban from "./Kanban";
 import { AuthProvider } from "../contexts/AuthContext";
 import api from "../api";
 
@@ -68,11 +68,8 @@ describe("Kanban", () => {
     desenharKanban();
 
     expect(await screen.findByText("Modelar o banco")).toBeInTheDocument();
-
     expect(screen.getByText("Criar a API")).toBeInTheDocument();
-
     expect(screen.queryByText("Carregando tarefas...")).not.toBeInTheDocument();
-
     expect(api.get).toHaveBeenCalledWith("/tarefas");
   });
 
@@ -112,7 +109,17 @@ describe("Kanban", () => {
         coluna: "afazer",
       }),
     );
-
     expect(await screen.findByText("Testar o Kanban")).toBeInTheDocument();
   });
+
+  // test("clicar no X da primeira tarefa chama api.delete com '/tarefas/1 e a tarefa some", async () => {
+  //   const user = userEvent.setup();
+  //   api.delete.mockResolvedValue();
+
+  //   desenharKanban();
+
+  //   await user.click(await screen.findByTitle("Excluir"));
+  //   expect(api.delete).toHaveBeenCalledWith("/tarefas/1");
+  //   expect(await screen.queryByText("Modelar o banco")).not.toBeInTheDocument();
+  // });
 });
