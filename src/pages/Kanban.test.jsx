@@ -114,10 +114,11 @@ describe("Kanban", () => {
 
   // test("clicar no X da primeira tarefa chama api.delete com '/tarefas/1 e a tarefa some", async () => {
   //   const user = userEvent.setup();
-  //   api.delete.mockResolvedValue();
+  //   api.delete.mockResolvedValue({});
 
   //   desenharKanban();
-
+// await screen.findByText("Modelar o banco");
+// const botoesX = screen.getAllByRole("button", { name: "X" });
   //   await user.click(await screen.findByTitle("Excluir"));
   //   expect(api.delete).toHaveBeenCalledWith("/tarefas/1");
   //   expect(await screen.queryByText("Modelar o banco")).not.toBeInTheDocument();

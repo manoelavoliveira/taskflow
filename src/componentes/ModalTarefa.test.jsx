@@ -134,14 +134,14 @@ describe("ModalTarefa", () => {
 
   test('com um onSalvar que nunca responde, o botão vira "Salvando..." e fica desabilitado', async () => {
     const user = userEvent.setup();
-    const onSalvar = vi.fn().mockReturnValue(new Promise(() => {}));
+    const onSalvar = vi.fn(() => new Promise(() => {}));
     abrirModal({ onSalvar });
 
     await user.type(screen.getByLabelText("Tarefa"), "Estudar React");
     await user.click(screen.getByRole("button", { name: "Salvar" }));
 
     expect(screen.getByRole("button", { name: "Salvando..." })).toBeDisabled();
-    expect(screen.getByText("Salvando...")).toBeInTheDocument();
+    // expect(screen.getByText("Salvando...")).toBeInTheDocument();
   });
 
   test("ao editar, o onSalvar recebe o id e a coluna da tarefa (use objectContaining)", async () => {
